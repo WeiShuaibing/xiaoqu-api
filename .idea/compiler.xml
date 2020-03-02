@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="xiaoqu-admin" />
+        <module name="xiaoqu-common" />
+        <module name="xiaoqu-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="xiaoqu-admin" target="1.8" />
+      <module name="xiaoqu-api" target="1.8" />
+      <module name="xiaoqu-common" target="1.8" />
+      <module name="xiaoqu-web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="xiaoqu-admin" options="-parameters" />
+      <module name="xiaoqu-common" options="-parameters" />
+      <module name="xiaoqu-web" options="-parameters" />
+    </option>
+  </component>
+</project>

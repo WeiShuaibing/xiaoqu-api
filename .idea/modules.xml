@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/xiaoqu-admin/xiaoqu-admin.iml" filepath="$PROJECT_DIR$/xiaoqu-admin/xiaoqu-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/xiaoqu-api.iml" filepath="$PROJECT_DIR$/.idea/xiaoqu-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xiaoqu-common/xiaoqu-common.iml" filepath="$PROJECT_DIR$/xiaoqu-common/xiaoqu-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xiaoqu-web/xiaoqu-web.iml" filepath="$PROJECT_DIR$/xiaoqu-web/xiaoqu-web.iml" />
+    </modules>
+  </component>
+</project>
