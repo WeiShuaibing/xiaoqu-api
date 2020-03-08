@@ -31,11 +31,6 @@ public class PayorderController {
 
     @GetMapping("/getPage")
     public R getPage(int pageNum, int pageSize, int type) {
-//        Page<Payorder> payorderPage = new Page<>(pageNum, pageSize);
-//        QueryWrapper<Payorder> query = Wrappers.<Payorder>query();
-//        query.orderByDesc("id").eq("pay_type", type);
-//        Page<Payorder> page = payorderService.page(payorderPage, query);
-//        return new R(page);
         return new R(payorderService.getPage(pageNum, pageSize, type));
     }
 
