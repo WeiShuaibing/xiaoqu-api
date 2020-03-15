@@ -9,6 +9,8 @@ import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+
 @RestController
 @RequestMapping("/user")
 @Api(value = "/user", tags = {"用户相关接口"})
@@ -31,6 +33,23 @@ public class UserController {
     public R info(@RequestHeader String YQYJToken){
         return new R(userService.getById(YQYJToken));
     }
+
+    @GetMapping("/infoForStore")
+    public R infoForStore(@RequestHeader String YQYJToken){
+        User db_user = userService.getById(YQYJToken);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("token",db_user.getId());
+        map.put("name", db_user.getUserName());
+        map.put("sex", db_user.getUserSex());
+        map.put("age", db_user.getUserAge());
+        map.put("phone",db_user.getUserPhone());
+        map.put("avatar",db_user.getUserAvatar());
+        map.put("roles",db_user.getRoles());
+        map.put("create_date",db_user.getCreateDate());
+        map.put("update_date",db_user.getUpdateDate());
+        return new R(map);
+    }
+
 
     @GetMapping("/logout")
     public R logout(){

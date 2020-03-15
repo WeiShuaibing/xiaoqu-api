@@ -35,6 +35,9 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         } else {
             HashMap<String, Object> map = new HashMap<>();
             map.put("token",db_user.getId());
+            map.put("name", db_user.getUserName());
+            map.put("sex", db_user.getUserSex());
+            map.put("age", db_user.getUserAge());
             map.put("phone",db_user.getUserPhone());
             map.put("avatar",db_user.getUserAvatar());
             map.put("roles",db_user.getRoles());
