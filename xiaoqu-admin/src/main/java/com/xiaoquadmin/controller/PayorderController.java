@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xiaoquadmin.service.AdminService;
+import com.xiaoquadmin.service.LogService;
 import com.xiaoquadmin.service.PayorderService;
 import com.xiaoqucommon.entity.Admin;
+import com.xiaoqucommon.entity.Log;
 import com.xiaoqucommon.entity.Payorder;
 import com.xiaoqucommon.pojo.R;
 import io.swagger.annotations.Api;
@@ -21,12 +23,22 @@ public class PayorderController {
 
     @Autowired
     private PayorderService payorderService;
+    @Autowired
+    private AdminService adminService;
+    @Autowired
+    private LogService logService;
 
     @PostMapping("/add")
-    public R add(@RequestBody Payorder payorder){
+    public R add(@RequestBody Payorder payorder, @RequestHeader int YQYJToken){
         boolean save = payorderService.save(payorder);
-        if (save) return new R();
-        else return new R(20001, "保存失败！");
+        Admin byId = adminService.getById(YQYJToken);
+        if (save) {
+            logService.save(new Log(byId.getAdminName(),"新增物业缴费->"+payorder.getPayText(),"success"));
+            return new R();
+        } else {
+            logService.save(new Log(byId.getAdminName(),"新增物业缴费->"+payorder.getPayText(),"新增失败！"));
+            return new R(20001, "保存失败！");
+        }
     }
 
     @GetMapping("/getPage")
@@ -35,10 +47,20 @@ public class PayorderController {
     }
 
     @GetMapping("/delete")
-    public R delete(int id) {
+    public R delete(int id, @RequestHeader int YQYJToken) {
+        Payorder del_payorder = payorderService.getById(id);
+
         boolean b = payorderService.removeById(id);
-        if (b) return new R();
-        else return new R(20001, "删除失败！");
+
+        Admin byId = adminService.getById(YQYJToken);
+
+        if (b) {
+            logService.save(new Log(byId.getAdminName(),"删除物业缴费->"+del_payorder.getPayText(),"success"));
+            return new R();
+        } else {
+            logService.save(new Log(byId.getAdminName(),"删除物业缴费->"+del_payorder.getPayText(),"删除失败！"));
+            return new R(20001, "删除失败！");
+        }
     }
 
     @PostMapping("/update")

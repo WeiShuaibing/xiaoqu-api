@@ -12,7 +12,7 @@ public class User {
 
     @TableId(type = IdType.AUTO)
     private int id;
-    private int buId; // 所属楼房
+    private Integer buId; // 所属楼房
     private String userName;
     private String userPhone;
     private String userPassword;

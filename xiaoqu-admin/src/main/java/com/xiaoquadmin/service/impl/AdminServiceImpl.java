@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xiaoquadmin.dao.AdminDao;
 import com.xiaoquadmin.service.AdminService;
+import com.xiaoquadmin.service.LogService;
 import com.xiaoqucommon.entity.Admin;
+import com.xiaoqucommon.entity.Log;
 import com.xiaoqucommon.pojo.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminDao, Admin> implements Ad
 
     @Autowired
     private AdminDao adminDao;
+    @Autowired
+    private LogService logService;
 
     @Override
     public R verifyLogin(Admin admin) {
@@ -40,6 +44,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminDao, Admin> implements Ad
             map.put("update_date",db_admin.getUpdateDate());
             r.setData(map);
         }
+        Admin getBy_admin_phone = this.getOne(Wrappers.<Admin>query().eq("admin_phone", admin.getAdminPhone()));
+        logService.save(new Log(getBy_admin_phone.getAdminName(), "登录", r.getMsg()));
         return r;
     }
 

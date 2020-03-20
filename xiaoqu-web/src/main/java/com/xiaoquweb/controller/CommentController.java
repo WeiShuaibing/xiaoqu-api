@@ -49,6 +49,15 @@ public class CommentController {
         return new R(commentService.getPageComment(pageNum, pageSize, topicId));
     }
 
+    @GetMapping("/getParentCommTotalNum")
+    public R getParentCommTotalNum(int topicId) {
+        QueryWrapper<Comment> query = Wrappers.<Comment>query();
+        query.eq("comment_parent_id", 0).eq("topic_id", topicId);
+        int count = commentService.count(query);
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("totalNum", count);
+        return new R(map);
+    }
 
     /**
      * 获取某个话题的总评论数和总点赞数

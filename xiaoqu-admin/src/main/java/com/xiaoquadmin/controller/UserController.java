@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xiaoquadmin.service.AdminService;
+import com.xiaoquadmin.service.LogService;
 import com.xiaoquadmin.service.UserService;
 import com.xiaoqucommon.entity.Admin;
+import com.xiaoqucommon.entity.Log;
 import com.xiaoqucommon.entity.User;
 import com.xiaoqucommon.pojo.MyPage;
 import com.xiaoqucommon.pojo.R;
@@ -23,6 +25,10 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private AdminService adminService;
+    @Autowired
+    private LogService logService;
 
     @GetMapping("/getPage")
     public R getPage(int pageNum, int pageSize) {
@@ -31,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public R add(@RequestBody User user) {
+    public R add(@RequestBody User user, @RequestHeader int YQYJToken) {
 
         QueryWrapper<User> query = Wrappers.<User>query();
         query.eq("user_phone", user.getUserPhone());
@@ -40,9 +46,17 @@ public class UserController {
             return new R(20002, "手机号已经存在！");
         }
 
+        Admin byId = adminService.getById(YQYJToken);
+
         boolean b = userService.save(user);
-        if (b) return new R();
-        else return new R(20001, "添加失败！");
+        if (b) {
+            logService.save(new Log(byId.getAdminName(), "新增用户->" + user.getUserName(), "success"));
+            return new R();
+        }
+        else {
+            logService.save(new Log(byId.getAdminName(), "新增用户->" + user.getUserName(), "添加失败!"));
+            return new R(20001, "添加失败！");
+        }
     }
 
     @GetMapping("/getById")
@@ -52,10 +66,21 @@ public class UserController {
     }
 
     @GetMapping("/delete")
-    public R delete(int id){
+    public R delete(int id, @RequestHeader int YQYJToken){
+        User de_user = userService.getById(id);
+
         boolean b = userService.removeById(id);
-        if (b) return new R();
-        else return new R(20001, "删除失败！");
+
+        Admin byId = adminService.getById(YQYJToken);
+
+        if (b) {
+            logService.save(new Log(byId.getAdminName(), "删除用户->" + de_user.getUserName(), "success"));
+            return new R();
+        }
+        else {
+            logService.save(new Log(byId.getAdminName(), "删除用户->" + de_user.getUserName(), "删除失败!"));
+            return new R(20001, "删除失败！");
+        }
     }
 
     @PostMapping("/update")

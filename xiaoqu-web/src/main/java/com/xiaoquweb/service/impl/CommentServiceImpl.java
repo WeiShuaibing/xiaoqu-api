@@ -71,7 +71,12 @@ public class CommentServiceImpl extends ServiceImpl<CommentDao, Comment> impleme
     }
 
     public int getSumOfLove(int topic_id){
-        int sumOfLove = commentDao.getSumOfLove(topic_id);
+        Integer sumOfLove = 0;
+        try {
+            sumOfLove = commentDao.getSumOfLove(topic_id);
+        }catch (Exception e) {
+            sumOfLove = 0;
+        }
         return sumOfLove;
     }
 

@@ -3,9 +3,13 @@ package com.xiaoquadmin.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xiaoquadmin.service.AdminService;
 import com.xiaoquadmin.service.BuildingService;
+import com.xiaoquadmin.service.LogService;
 import com.xiaoquadmin.service.UserService;
+import com.xiaoqucommon.entity.Admin;
 import com.xiaoqucommon.entity.Building;
+import com.xiaoqucommon.entity.Log;
 import com.xiaoqucommon.entity.User;
 import com.xiaoqucommon.pojo.R;
 import io.swagger.annotations.Api;
@@ -22,6 +26,10 @@ public class BuildingController {
 
     @Autowired
     private BuildingService buildingService;
+    @Autowired
+    private AdminService adminService;
+    @Autowired
+    private LogService logService;
 
     @GetMapping("/getPage")
     public R getPage(int pageNum, int pageSize) {
@@ -39,10 +47,17 @@ public class BuildingController {
     }
 
     @PostMapping("/add")
-    public R add(@RequestBody Building building) {
+    public R add(@RequestBody Building building, @RequestHeader int YQYJToken) {
         boolean b = buildingService.save(building);
-        if (b) return new R();
-        else return new R(20001, "添加失败！");
+        Admin byId = adminService.getById(YQYJToken);
+        if (b) {
+            logService.save(new Log(byId.getAdminName(), "新增楼房信息->" + building.getBuName() + "-" + building.getBuHome(), "success"));
+            return new R();
+        }
+        else {
+            logService.save(new Log(byId.getAdminName(), "新增楼房信息->" + building.getBuName() + "-" + building.getBuHome(), "添加失败"));
+            return new R(20001, "添加失败！");
+        }
     }
 
     @GetMapping("/getById")
@@ -52,10 +67,22 @@ public class BuildingController {
     }
 
     @GetMapping("/delete")
-    public R delete(int id){
+    public R delete(int id, @RequestHeader int YQYJToken){
+
+        Building building = buildingService.getById(id);
+
         boolean b = buildingService.removeById(id);
-        if (b) return new R();
-        else return new R(20001, "删除失败！");
+
+        Admin byId = adminService.getById(YQYJToken);
+
+        if (b) {
+            logService.save(new Log(byId.getAdminName(), "删除楼房->" + building.getBuName() + "-" + building.getBuHome(), "success"));
+            return new R();
+        }
+        else {
+            logService.save(new Log(byId.getAdminName(), "删除楼房->" + building.getBuName() + "-" + building.getBuHome(), "删除失败!"));
+            return new R(20001, "删除失败！");
+        }
     }
 
     @PostMapping("/update")

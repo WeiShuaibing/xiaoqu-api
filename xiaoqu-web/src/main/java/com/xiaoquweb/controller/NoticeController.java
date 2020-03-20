@@ -19,12 +19,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/notice")
-@Api(value = "/notice", tags = {"通知相关接口"})
+
 public class NoticeController {
 
     @Autowired
     private NoticeService noticeService;
 
+    @GetMapping("/testGetAll")
+    public R testGetAll(){
+        List<Notice> notices = noticeService.testGetAllNoticeInService();
+        return new R(notices);
+    }
 
     @GetMapping("/getById")
     public R getById(int id) {
