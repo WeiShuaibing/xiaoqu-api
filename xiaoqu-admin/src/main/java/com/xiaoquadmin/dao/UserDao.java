@@ -23,4 +23,11 @@ public interface UserDao extends BaseMapper<User> {
             "where u.bu_id=b.id AND u.user_name like #{matchStr}")
     int searchCount(String matchStr);
 
+
+    /**
+     * 查询最近几天用户活跃量
+     */
+    @Select("select DATE_FORMAT(update_date,'%Y-%m-%d') days,count(*) count from `user` where DATE_SUB(CURDATE(), INTERVAL #{days} DAY) <= update_date group by days;")
+    public List<Map<String,Object>> selectUserActiveNum(int days);
+
 }

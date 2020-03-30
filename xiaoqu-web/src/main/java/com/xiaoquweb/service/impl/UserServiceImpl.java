@@ -11,7 +11,9 @@ import com.xiaoquweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserService {
@@ -44,8 +46,11 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
             map.put("create_date",db_user.getCreateDate());
             map.put("update_date",db_user.getUpdateDate());
             r.setData(map);
+            db_user.setUpdateDate(new Date());
+            userDao.insert(db_user);
         }
         return r;
 
     }
+
 }

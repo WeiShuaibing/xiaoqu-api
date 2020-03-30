@@ -8,6 +8,10 @@ import com.xiaoqucommon.pojo.MyPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,5 +35,30 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
         List<Map<String, Object>> list = userDao.search((pageNum - 1) * pageSize, pageSize, "%" + matchStr + "%");
         MyPage<Map<String, Object>> mapMyPage = new MyPage<Map<String,Object>>(list, userDao.searchCount("%"+matchStr+"%"));
         return mapMyPage;
+    }
+
+    @Override
+    public List<Integer> selectUserActiveNum(int days) {
+        List<Map<String, Object>> maps = userDao.selectUserActiveNum(days);
+        System.out.println(maps);
+        HashMap<String, Integer> day_count = new HashMap<>();
+        for (Map<String, Object> map : maps) {
+            day_count.put(map.get("days").toString(),Integer.valueOf(map.get("count").toString()));
+        }
+
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        ArrayList<Integer> active_num_list = new ArrayList<>();
+        for (int i=days-1;i >= 0;i--) {
+            String day = now.minus(i, ChronoUnit.DAYS).format(formatter);
+            if (day_count.containsKey(day)){
+                active_num_list.add(day_count.get(day));
+            } else {
+                active_num_list.add(0);
+            }
+        }
+
+        return active_num_list;
     }
 }

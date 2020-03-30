@@ -16,4 +16,6 @@ public interface UserService extends IService<User> {
 
     MyPage<Map<String, Object>> search(int pageNum, int pageSize, String matchStr);
 
+
+    public List<Integer> selectUserActiveNum(int days);
 }

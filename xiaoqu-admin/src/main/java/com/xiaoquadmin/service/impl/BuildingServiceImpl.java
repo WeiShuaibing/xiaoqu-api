@@ -54,4 +54,10 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingDao, Building> impl
         }
         return format_data;
     }
+
+
+    @Override
+    public int getBuildingCount() {
+        return buildingDao.getBuildingCount();
+    }
 }

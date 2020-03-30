@@ -9,4 +9,7 @@ import java.util.Map;
 
 public interface BuildingService extends IService<Building> {
     public List<Map<String, Object>> getHomeFormat();
+
+    public int getBuildingCount();
+
 }
