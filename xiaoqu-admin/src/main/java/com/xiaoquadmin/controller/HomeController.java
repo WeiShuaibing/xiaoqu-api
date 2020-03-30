@@ -37,7 +37,6 @@ public class HomeController {
         map.put("buildingCount", buildingService.getBuildingCount());
         map.put("carCount", carService.count());
         map.put("activeUserData", userService.selectUserActiveNum(7));
-
         return new R(map);
 
     }
