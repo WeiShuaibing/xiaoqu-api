@@ -19,7 +19,10 @@ public class Repair {
     private Integer userId; // 投诉建议用户的id
     private String repairText;
     private String repairImgs;
-    private int repairStatus; //投诉，建议的状态  1 发起维修，2 收到维修，3 维修完毕
+    private Integer repairStatus; //投诉，建议的状态  1 发起维修，2 收到维修，3 维修完毕
+
+    private Integer repairEvaluate; // 评分
+    private String repairEvaluateText; // 评语
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createDate; //创建时间

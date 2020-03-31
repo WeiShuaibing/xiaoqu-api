@@ -40,4 +40,17 @@ public class SuggestionController {
         return new R(suggestionService.list(query));
     }
 
+    /**
+     * 增加用户的评价
+     */
+    @PostMapping("/addEvaluate")
+    public R addEvaluate(@RequestBody Suggestion suggestion) {
+        boolean b = suggestionService.updateById(suggestion);
+        if (b) {
+            return new R();
+        } else  {
+            return new R(20001, "增加评价信息失败！");
+        }
+    }
+
 }

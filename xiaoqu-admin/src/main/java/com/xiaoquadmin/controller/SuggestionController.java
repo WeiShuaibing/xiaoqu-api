@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xiaoquadmin.service.SuggestionService;
+import com.xiaoqucommon.entity.Repair;
 import com.xiaoqucommon.entity.Suggestion;
 import com.xiaoqucommon.pojo.MyPage;
 import com.xiaoqucommon.pojo.R;
@@ -64,6 +65,8 @@ public class SuggestionController {
         if (b) return new R();
         else return new R(20001, "更新失败！");
     }
+
+
 
 
 }

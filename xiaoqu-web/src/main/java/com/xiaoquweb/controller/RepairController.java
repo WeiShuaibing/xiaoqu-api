@@ -40,4 +40,17 @@ public class RepairController {
         return new R(repairService.list(query));
     }
 
+    /**
+     * 增加评论信息
+     */
+    @PostMapping("/addEvaluate")
+    public R addEvaluate(@RequestBody Repair repair) {
+        boolean b = repairService.updateById(repair);
+        if (b) {
+            return new R();
+        } else  {
+            return new R(20001, "增加评论信息失败！");
+        }
+    }
+
 }

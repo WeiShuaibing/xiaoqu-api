@@ -47,7 +47,7 @@ public class UserServiceImpl extends ServiceImpl<UserDao, User> implements UserS
             map.put("update_date",db_user.getUpdateDate());
             r.setData(map);
             db_user.setUpdateDate(new Date());
-            userDao.insert(db_user);
+            userDao.updateById(db_user);
         }
         return r;
 
