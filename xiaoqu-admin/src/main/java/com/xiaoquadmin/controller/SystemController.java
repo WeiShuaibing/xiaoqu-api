@@ -75,7 +75,7 @@ public class SystemController {
             dbOperate.dbRestore(host, sqluser, pwd, dbName, backup_path, mysqlBinPath);
             return new R();
         }catch (Exception e){
-            return new R(20000, "服务异常，数据恢复失败！");
+            return new R(20000, "服务异常，数据恢复失败！ ");
         }
     }
 
