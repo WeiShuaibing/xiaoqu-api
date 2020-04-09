@@ -126,7 +126,6 @@ public class HomeController {
         map4.put("value", su_count_4);
         map4.put("name", "电费");
         list.add(map4);
-
         return new R(list);
     }
 }
