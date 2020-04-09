@@ -13,4 +13,6 @@ public interface PayorderService extends IService<Payorder> {
 
     public MyPage<Map<String, Object>> getPage(int pageNum, int pageSize, int type);
 
+    public Float getThisMonthTotalmoney(int pay_type);
+
 }

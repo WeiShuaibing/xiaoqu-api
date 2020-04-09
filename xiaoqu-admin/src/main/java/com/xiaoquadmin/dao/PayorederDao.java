@@ -24,4 +24,11 @@ public interface PayorederDao extends BaseMapper<Payorder> {
             "pay.user_id=u.id AND pay.pay_type = #{type}")
     public int getPageCount(int type);
 
+
+    /**
+     * 查询已缴费的订单，不同种类的订单的缴费总数
+     */
+    @Select("SELECT SUM(pay_money) FROM payorder WHERE DATE_FORMAT( create_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) AND pay_type = #{pay_type} " +
+            "AND id IN (SELECT payorder_id FROM payrecord)")
+    public Float getThisMonthTotalmoney(int pay_type);
 }
