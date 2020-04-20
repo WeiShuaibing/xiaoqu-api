@@ -22,8 +22,8 @@ public class PayorderController {
 
 
     @GetMapping("/getAllOfINotPay")
-    public R getAllINotPay(@RequestHeader int YQYJToken){
-        List<Payorder> allINotPay = payorderService.getAllINotPay(YQYJToken);
+    public R getAllINotPay(@RequestHeader int XiaoQuToken){
+        List<Payorder> allINotPay = payorderService.getAllINotPay(XiaoQuToken);
         return new R(allINotPay);
     }
 

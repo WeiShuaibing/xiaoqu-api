@@ -22,9 +22,9 @@ public class PayrecordController {
 
 
     @GetMapping("/setNewRecord")
-    public R setNewRecord(int id, @RequestHeader int YQYJToken){
+    public R setNewRecord(int id, @RequestHeader int XiaoQuToken){
         Payrecord record = new Payrecord();
-        record.setUserId(YQYJToken);
+        record.setUserId(XiaoQuToken);
         record.setPayorderId(id);
         record.setPayorderStatus(1);
         boolean save = payrecordService.save(record);
@@ -36,8 +36,8 @@ public class PayrecordController {
      * 获取我的缴费记录
      */
     @GetMapping("/getMyRecord")
-    public R getMyRecord(@RequestHeader int YQYJToken){
-        List<Map<String, Object>> allHavedPay = payrecordService.getAllHavedPay(YQYJToken);
+    public R getMyRecord(@RequestHeader int XiaoQuToken){
+        List<Map<String, Object>> allHavedPay = payrecordService.getAllHavedPay(XiaoQuToken);
         return new R(allHavedPay);
     }
 

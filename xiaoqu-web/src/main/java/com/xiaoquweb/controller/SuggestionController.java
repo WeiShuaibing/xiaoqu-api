@@ -25,8 +25,8 @@ public class SuggestionController {
     }
 
     @PostMapping("/add")
-    public R add(@RequestBody Suggestion suggestion, @RequestHeader int YQYJToken) {
-        suggestion.setUserId(YQYJToken);
+    public R add(@RequestBody Suggestion suggestion, @RequestHeader int XiaoQuToken) {
+        suggestion.setUserId(XiaoQuToken);
         suggestion.setSuStatus(1);
         boolean save = suggestionService.save(suggestion);
         if (save) return new R();
@@ -34,9 +34,9 @@ public class SuggestionController {
     }
 
     @GetMapping("/getAllOfMy")
-    public R getAllOfMy(@RequestHeader int YQYJToken){
+    public R getAllOfMy(@RequestHeader int XiaoQuToken){
         QueryWrapper<Suggestion> query = Wrappers.<Suggestion>query();
-        query.eq("user_id", YQYJToken).orderByDesc("id");
+        query.eq("user_id", XiaoQuToken).orderByDesc("id");
         return new R(suggestionService.list(query));
     }
 

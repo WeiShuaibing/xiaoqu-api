@@ -31,13 +31,13 @@ public class UserController {
      * @return
      */
     @GetMapping("/info")
-    public R info(@RequestHeader String YQYJToken){
-        return new R(userService.getById(YQYJToken));
+    public R info(@RequestHeader String XiaoQuToken){
+        return new R(userService.getById(XiaoQuToken));
     }
 
     @GetMapping("/infoForStore")
-    public R infoForStore(@RequestHeader String YQYJToken){
-        User db_user = userService.getById(YQYJToken);
+    public R infoForStore(@RequestHeader String XiaoQuToken){
+        User db_user = userService.getById(XiaoQuToken);
         HashMap<String, Object> map = new HashMap<>();
         map.put("token",db_user.getId());
         map.put("name", db_user.getUserName());

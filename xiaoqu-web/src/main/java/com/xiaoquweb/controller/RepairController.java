@@ -25,8 +25,8 @@ public class RepairController {
     }
 
     @PostMapping("/add")
-    public R add(@RequestBody Repair repair, @RequestHeader int YQYJToken) {
-        repair.setUserId(YQYJToken);
+    public R add(@RequestBody Repair repair, @RequestHeader int XiaoQuToken) {
+        repair.setUserId(XiaoQuToken);
         repair.setRepairStatus(1);
         boolean save = repairService.save(repair);
         if (save) return new R();
@@ -34,9 +34,9 @@ public class RepairController {
     }
 
     @GetMapping("/getAllOfMy")
-    public R getAllOfMy(@RequestHeader int YQYJToken){
+    public R getAllOfMy(@RequestHeader int XiaoQuToken){
         QueryWrapper<Repair> query = Wrappers.<Repair>query();
-        query.eq("user_id", YQYJToken).orderByDesc("id");
+        query.eq("user_id", XiaoQuToken).orderByDesc("id");
         return new R(repairService.list(query));
     }
 
