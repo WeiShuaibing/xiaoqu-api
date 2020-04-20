@@ -29,9 +29,9 @@ public class PayorderController {
     private LogService logService;
 
     @PostMapping("/add")
-    public R add(@RequestBody Payorder payorder, @RequestHeader int YQYJToken){
+    public R add(@RequestBody Payorder payorder, @RequestHeader int XiaoQuToken){
         boolean save = payorderService.save(payorder);
-        Admin byId = adminService.getById(YQYJToken);
+        Admin byId = adminService.getById(XiaoQuToken);
         if (save) {
             logService.save(new Log(byId.getAdminName(),"新增物业缴费->"+payorder.getPayText(),"success"));
             return new R();
@@ -47,12 +47,12 @@ public class PayorderController {
     }
 
     @GetMapping("/delete")
-    public R delete(int id, @RequestHeader int YQYJToken) {
+    public R delete(int id, @RequestHeader int XiaoQuToken) {
         Payorder del_payorder = payorderService.getById(id);
 
         boolean b = payorderService.removeById(id);
 
-        Admin byId = adminService.getById(YQYJToken);
+        Admin byId = adminService.getById(XiaoQuToken);
 
         if (b) {
             logService.save(new Log(byId.getAdminName(),"删除物业缴费->"+del_payorder.getPayText(),"success"));

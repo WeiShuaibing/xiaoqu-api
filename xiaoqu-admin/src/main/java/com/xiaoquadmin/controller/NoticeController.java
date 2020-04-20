@@ -32,9 +32,9 @@ public class NoticeController {
     private LogService logService;
 
     @PostMapping("/add")
-    public R add(@RequestBody Notice notice, @RequestHeader int YQYJToken){
+    public R add(@RequestBody Notice notice, @RequestHeader int XiaoQuToken){
         boolean save = noticeService.save(notice);
-        Admin byId = adminService.getById(YQYJToken);
+        Admin byId = adminService.getById(XiaoQuToken);
         if (save) {
             logService.save(new Log(byId.getAdminName(), "新增公告->" + notice.getNoText(), "success"));
             return new R();
@@ -56,11 +56,11 @@ public class NoticeController {
 
 
     @GetMapping("/delete")
-    public R delete(int id, @RequestHeader int YQYJToken){
+    public R delete(int id, @RequestHeader int XiaoQuToken){
 
         Notice del_notice = noticeService.getById(id);
         boolean save = noticeService.removeById(id);
-        Admin byId = adminService.getById(YQYJToken);
+        Admin byId = adminService.getById(XiaoQuToken);
 
         if (save) {
             logService.save(new Log(byId.getAdminName(), "删除公告->"+del_notice.getNoText(), "success"));

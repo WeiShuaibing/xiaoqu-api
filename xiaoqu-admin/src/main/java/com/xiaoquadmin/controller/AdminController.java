@@ -35,8 +35,8 @@ public class AdminController {
      * @return
      */
     @GetMapping("/info")
-    public R info(@RequestHeader String YQYJToken){
-        return new R(adminService.getById(YQYJToken));
+    public R info(@RequestHeader String XiaoQuToken){
+        return new R(adminService.getById(XiaoQuToken));
     }
 
     @GetMapping("/logout")
@@ -46,7 +46,7 @@ public class AdminController {
     }
 
     @PostMapping("/add")
-    public R add(@RequestBody Admin admin, @RequestHeader int YQYJToken){
+    public R add(@RequestBody Admin admin, @RequestHeader int XiaoQuToken){
 
         Admin admin_phone = adminService.getOne(Wrappers.<Admin>query().eq("admin_phone", admin.getAdminPhone()));
         if (admin_phone!= null) {
@@ -54,7 +54,7 @@ public class AdminController {
         }
 
         boolean b = adminService.save(admin);
-        Admin byId = adminService.getById(YQYJToken);
+        Admin byId = adminService.getById(XiaoQuToken);
         if (b) {
             logService.save(new Log(byId.getAdminName(), "新增管理员->" + admin.getAdminName(), "success"));
             return new R();
@@ -79,10 +79,10 @@ public class AdminController {
     }
 
     @GetMapping("/delete")
-    public R delete(int id, @RequestHeader int YQYJToken) {
+    public R delete(int id, @RequestHeader int XiaoQuToken) {
 
         Admin delete_admin = adminService.getById(id);
-        Admin byId = adminService.getById(YQYJToken);
+        Admin byId = adminService.getById(XiaoQuToken);
         boolean b = adminService.removeById(id);
         if (b) {
             logService.save(new Log(byId.getAdminName(), "删除管理员->" + delete_admin.getAdminName(), "success"));

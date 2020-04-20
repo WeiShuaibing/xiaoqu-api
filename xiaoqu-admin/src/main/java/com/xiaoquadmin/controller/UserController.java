@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public R add(@RequestBody User user, @RequestHeader int YQYJToken) {
+    public R add(@RequestBody User user, @RequestHeader int XiaoQuToken) {
 
         QueryWrapper<User> query = Wrappers.<User>query();
         query.eq("user_phone", user.getUserPhone());
@@ -46,7 +46,7 @@ public class UserController {
             return new R(20002, "手机号已经存在！");
         }
 
-        Admin byId = adminService.getById(YQYJToken);
+        Admin byId = adminService.getById(XiaoQuToken);
 
         boolean b = userService.save(user);
         if (b) {
@@ -66,12 +66,12 @@ public class UserController {
     }
 
     @GetMapping("/delete")
-    public R delete(int id, @RequestHeader int YQYJToken){
+    public R delete(int id, @RequestHeader int XiaoQuToken){
         User de_user = userService.getById(id);
 
         boolean b = userService.removeById(id);
 
-        Admin byId = adminService.getById(YQYJToken);
+        Admin byId = adminService.getById(XiaoQuToken);
 
         if (b) {
             logService.save(new Log(byId.getAdminName(), "删除用户->" + de_user.getUserName(), "success"));

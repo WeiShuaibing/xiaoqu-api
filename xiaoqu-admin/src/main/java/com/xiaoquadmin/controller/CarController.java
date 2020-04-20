@@ -31,10 +31,10 @@ public class CarController {
     private LogService logService;
 
     @PostMapping("/add")
-    public R add(@RequestBody Car car, @RequestHeader int YQYJToken) {
+    public R add(@RequestBody Car car, @RequestHeader int XiaoQuToken) {
         boolean save = carService.save(car);
 
-        Admin byId = adminService.getById(YQYJToken);
+        Admin byId = adminService.getById(XiaoQuToken);
 
         if (save) {
             logService.save(new Log(byId.getAdminName(), "新增车位->" + car.getCarAddr(), "success"));
@@ -53,12 +53,12 @@ public class CarController {
     }
 
     @GetMapping("/delete")
-    public R delete(int id, @RequestHeader int YQYJToken) {
+    public R delete(int id, @RequestHeader int XiaoQuToken) {
 
         Car del_car = carService.getById(id);
 
         boolean b = carService.removeById(id);
-        Admin byId = adminService.getById(YQYJToken);
+        Admin byId = adminService.getById(XiaoQuToken);
 
         if (b) {
             logService.save(new Log(byId.getAdminName(), "删除车位->" + del_car.getCarAddr(), "success"));

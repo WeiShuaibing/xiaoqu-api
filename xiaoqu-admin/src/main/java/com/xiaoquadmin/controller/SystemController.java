@@ -43,14 +43,14 @@ public class SystemController {
     private AdminService adminService;
 
     @PostMapping("/backup")
-    public R backup(@RequestBody Backup backup, @RequestHeader int YQYJToken){
-        Admin admin = adminService.getById(YQYJToken);
+    public R backup(@RequestBody Backup backup, @RequestHeader int XiaoQuToken){
+        Admin admin = adminService.getById(XiaoQuToken);
         try {
             String backName = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date())+".sql";
             DbOperate dbOperate = new DbOperate();
             String path = dbOperate.dbBackUpOfWin(host, sqluser, pwd, dbName, backPath, backName, mysqlBinPath);
             backup.setBackupPath(path);
-            backup.setAdminId(YQYJToken);
+            backup.setAdminId(XiaoQuToken);
             boolean save = backupService.save(backup);
             if (save) {
                 logService.save(new Log(admin.getAdminName(), "数据备份->" + backup.getBackupText(), "success"));
