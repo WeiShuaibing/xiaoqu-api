@@ -18,6 +18,10 @@ public interface TopicDao extends BaseMapper<Topic> {
 
 
     @Select("select t.*, u.user_name, u.user_avatar from topic t, `user` u " +
+            "where t.user_id = u.id order by t.id desc limit #{startRow},#{pageSize}")
+    public List<Map<String, Object>> getAllTopic(int startRow, int pageSize);
+
+    @Select("select t.*, u.user_name, u.user_avatar from topic t, `user` u " +
             "where t.user_id = u.id order by t.id desc limit #{pageSize}")
     public List<Map<String, Object>> getNewTopic(int pageSize);
 

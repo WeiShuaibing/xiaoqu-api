@@ -3,8 +3,10 @@ package com.xiaoquweb.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xiaoqucommon.entity.Notice;
 import com.xiaoqucommon.entity.Topic;
+import com.xiaoqucommon.pojo.MyPage;
 import com.xiaoqucommon.pojo.R;
 import com.xiaoquweb.service.NoticeService;
 import com.xiaoquweb.service.TopicService;
@@ -45,6 +47,11 @@ public class TopicController {
         return new R(hotTopic);
     }
 
+    @GetMapping("/getAllTopic")
+    public R getAllTopic(int pageNum, int pageSize) {
+        MyPage allTopic = topicService.getAllTopic(pageNum, pageSize);
+        return new R(allTopic);
+    }
     // 点赞话题
     @GetMapping("/love")
     public R love(int id) {
