@@ -12,4 +12,6 @@ public interface SuggestionService extends IService<Suggestion> {
 
     public MyPage<Map<String, Object>> getPage(int pagNum, int pageSize, int status);
 
+    public MyPage<Map<String, Object>> getPageOfEdit(int token,int pageNum, int pageSize, int status);
+
 }

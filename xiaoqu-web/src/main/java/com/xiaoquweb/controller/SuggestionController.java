@@ -28,7 +28,7 @@ public class SuggestionController {
     public R add(@RequestBody Suggestion suggestion, @RequestHeader int XiaoQuToken) {
         suggestion.setUserId(XiaoQuToken);
         suggestion.setSuStatus(1);
-        boolean save = suggestionService.save(suggestion);
+        boolean save = suggestionService.saveAndFenpei(suggestion);
         if (save) return new R();
         else return new R(20001, "服务异常，保存失败！");
     }

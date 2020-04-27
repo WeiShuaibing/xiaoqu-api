@@ -28,7 +28,7 @@ public class RepairController {
     public R add(@RequestBody Repair repair, @RequestHeader int XiaoQuToken) {
         repair.setUserId(XiaoQuToken);
         repair.setRepairStatus(1);
-        boolean save = repairService.save(repair);
+        boolean save = repairService.saveAndFenpei(repair);
         if (save) return new R();
         else return new R(20001, "服务异常，保存失败！");
     }

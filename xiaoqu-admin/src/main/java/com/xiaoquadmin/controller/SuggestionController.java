@@ -27,7 +27,12 @@ public class SuggestionController {
     public R getPage(int pageNum, int pageSize, int status) {
         MyPage<Map<String, Object>> page = suggestionService.getPage(pageNum, pageSize, status);
         return new R(page);
+    }
 
+    @GetMapping("/getPageOfEdit")
+    public R getPageOfEdit(@RequestHeader int XiaoQuToken, int pageNum, int pageSize, int status) {
+        MyPage<Map<String, Object>> page = suggestionService.getPageOfEdit(XiaoQuToken, pageNum, pageSize, status);
+        return new R(page);
     }
 
     @GetMapping("/getById")

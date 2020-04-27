@@ -36,7 +36,9 @@ public class AdminController {
      */
     @GetMapping("/info")
     public R info(@RequestHeader String XiaoQuToken){
-        return new R(adminService.getById(XiaoQuToken));
+        Admin byId = adminService.getById(XiaoQuToken);
+        System.out.println(byId);
+        return new R(byId);
     }
 
     @GetMapping("/logout")
@@ -52,7 +54,7 @@ public class AdminController {
         if (admin_phone!= null) {
             return new R(20001,"手机号/账号已存在！");
         }
-
+        admin.setRoles("editor");
         boolean b = adminService.save(admin);
         Admin byId = adminService.getById(XiaoQuToken);
         if (b) {

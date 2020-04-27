@@ -20,6 +20,13 @@ public class RepairController {
     @Autowired
     private RepairService repairService;
 
+
+    @GetMapping("/getPageOfEdit")
+    public R getPageOfEdit(@RequestHeader int XiaoQuToken, int pageNum, int pageSize, int status) {
+        MyPage<Map<String, Object>> page = repairService.getPageOfEdit(XiaoQuToken, pageNum, pageSize, status);
+        return new R(page);
+    }
+
     @GetMapping("/getPage")
     public R getPage(int pageNum, int pageSize, int status) {
         MyPage<Map<String, Object>> page = repairService.getPage(pageNum, pageSize, status);

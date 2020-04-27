@@ -31,4 +31,13 @@ public class SuggestionServiceImpl extends ServiceImpl<SuggestionDao, Suggestion
                 suggestionDao.selectCount(Wrappers.<Suggestion>query().eq("su_status", status)));
         return mapMyPage;
     }
+
+
+    @Override
+    public MyPage<Map<String, Object>> getPageOfEdit(int token, int pageNum, int pageSize, int status) {
+        List<Map<String, Object>> page = suggestionDao.getPageOfEdit(token,(pageNum - 1) * pageSize, pageSize, status);
+        MyPage<Map<String, Object>> mapMyPage = new MyPage<>(page,
+                suggestionDao.selectCount(Wrappers.<Suggestion>query().eq("su_status", status).eq("admin_id", token)));
+        return mapMyPage;
+    }
 }
