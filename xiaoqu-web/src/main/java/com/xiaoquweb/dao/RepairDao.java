@@ -17,4 +17,10 @@ public interface RepairDao extends BaseMapper<Repair> {
     @Select("SELECT admin_id,COUNT(*) total FROM `repair` GROUP BY admin_id")
     List<Map<String, Object>> queryAdminRepairStatistics();
 
+
+    /**
+     * 所有admin_id
+     */
+    @Select("SELECT id FROM admin where roles = 'editor'")
+    List<String> getAllAdminId();
 }

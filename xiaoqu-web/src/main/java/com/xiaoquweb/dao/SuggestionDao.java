@@ -17,4 +17,12 @@ public interface SuggestionDao extends BaseMapper<Suggestion> {
     @Select("SELECT admin_id,COUNT(*) total FROM `suggestion` GROUP BY admin_id")
     List<Map<String, Object>> queryAdminSuggestionStatistics();
 
+
+
+    /**
+     * 所有admin_id
+     */
+    @Select("SELECT id FROM admin where roles = 'editor'")
+    List<String> getAllAdminId();
+
 }

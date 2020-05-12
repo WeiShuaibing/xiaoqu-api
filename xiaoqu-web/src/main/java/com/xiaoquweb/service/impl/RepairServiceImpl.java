@@ -10,6 +10,7 @@ import com.xiaoquweb.service.SuggestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ public class RepairServiceImpl extends ServiceImpl<RepairDao, Repair> implements
 
     @Autowired
     private RepairDao repairDao;
+
     /**
      * 保存并分配管理员id
      * @return
@@ -25,8 +27,23 @@ public class RepairServiceImpl extends ServiceImpl<RepairDao, Repair> implements
     @Override
     public boolean saveAndFenpei(Repair repair) {
         List<Map<String, Object>> maps = repairDao.queryAdminRepairStatistics();
+
+        //获取所有的admin_id
+        List<String> allAdminId = repairDao.getAllAdminId();
+
         int admin_id = 0;
         long min_admin_sug_total = 10000;
+
+        for (Map<String, Object> map : maps) {
+            allAdminId.remove(map.get("admin_id").toString());
+        }
+        for (String id : allAdminId) {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("admin_id", id);
+            map.put("total", 0);
+            maps.add(map);
+        }
+
         for (Map<String, Object> map : maps) {
             if (min_admin_sug_total > Long.valueOf(map.get("total").toString())) {
                 min_admin_sug_total = Long.valueOf(map.get("total").toString());

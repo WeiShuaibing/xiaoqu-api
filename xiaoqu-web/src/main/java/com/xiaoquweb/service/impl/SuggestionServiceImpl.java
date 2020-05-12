@@ -12,6 +12,7 @@ import com.xiaoquweb.service.SuggestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,21 @@ public class SuggestionServiceImpl extends ServiceImpl<SuggestionDao, Suggestion
     @Override
     public boolean saveAndFenpei(Suggestion suggestion) {
         List<Map<String, Object>> maps = suggestionDao.queryAdminSuggestionStatistics();
+
+        //获取所有的admin_id
+        List<String> allAdminId = suggestionDao.getAllAdminId();
+
+
+        for (Map<String, Object> map : maps) {
+            allAdminId.remove(map.get("admin_id").toString());
+        }
+        for (String id : allAdminId) {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("admin_id", id);
+            map.put("total", 0);
+            maps.add(map);
+        }
+
         int admin_id = 0;
         long min_admin_sug_total = 10000;
         for (Map<String, Object> map : maps) {
